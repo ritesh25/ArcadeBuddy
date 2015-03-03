@@ -40,8 +40,9 @@ public class DQBaytekMachine extends BTProtocol implements BTRespListener, BTReq
     }
 
 
-    public DQBaytekMachine(BTMachineType machineType, DQBaytekMachineListenerInterface listener) {
+    public DQBaytekMachine(BTMachineType machineType, String serial, DQBaytekMachineListenerInterface listener) {
         super(machineType.getId(), null, null);
+        this.serialToLookFor = serial;
         this.listener = listener;
     }
 
@@ -740,6 +741,7 @@ public class DQBaytekMachine extends BTProtocol implements BTRespListener, BTReq
          * This callback will be fired every time a connection to an object succeeds.
          * You can safely ignore this here and handle the callback in the DQObjectListener callback method
          */
+        DQManager.MAIN_INSTANCE.stopDiscovering();
     }
 
     @Override
@@ -783,7 +785,7 @@ public class DQBaytekMachine extends BTProtocol implements BTRespListener, BTReq
     @Override
     public Context provideApplicationContext() {
         // DQuid SDK needs the application context, please provide it here;
-        return MainActivity.context;
+        return BayTekActivity.context;
     }
 
     @Override

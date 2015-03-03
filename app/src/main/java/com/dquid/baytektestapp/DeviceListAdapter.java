@@ -13,16 +13,16 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by shobhitg on 2/28/2015.
  */
-public class UserAdapter extends BaseAdapter {
+public class DeviceListAdapter extends BaseAdapter {
 
     Context context;
-    UserModel[] users;
+    DeviceModel[] devices;
     private static LayoutInflater inflater = null;
 
-    public UserAdapter(Context context, UserModel[] users) {
+    public DeviceListAdapter(Context context, DeviceModel[] devices) {
         // TODO Auto-generated constructor stub
         this.context = context;
-        this.users = users;
+        this.devices = devices;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -30,13 +30,13 @@ public class UserAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return users.length;
+        return devices.length;
     }
 
     @Override
     public Object getItem(int position) {
         // TODO Auto-generated method stub
-        return users[position];
+        return devices[position];
     }
 
     @Override
@@ -50,12 +50,12 @@ public class UserAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         View vi = convertView;
         if (vi == null)
-            vi = inflater.inflate(R.layout.user_item, null);
+            vi = inflater.inflate(R.layout.device_item, null);
         TextView text = (TextView) vi.findViewById(R.id.text);
         ImageView imageView = (ImageView) vi.findViewById(R.id.imageView1);
 
-        text.setText(users[position].getName());
-        Picasso.with(context).load(users[position].getAvatarUrl()).into(imageView);
+        text.setText(devices[position].getDeviceName());
+        Picasso.with(context).load(devices[position].getPhotoUrl()).into(imageView);
 
         return vi;
     }

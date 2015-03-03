@@ -1,5 +1,6 @@
 package com.dquid.baytektestapp;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -14,21 +15,29 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.dquid.baytektestapp.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-public class BayTekActivity extends ActionBarActivity implements OnFragmentInteractionListener {
+public class BayTekActivity extends ActionBarActivity implements OnFragmentInteractionListener, DQBaytekMachine.DQBaytekMachineListenerInterface {
 
     public enum FragmentType
     {
-        USERS, DEVICES
+        USERS, DEVICES, USER_DETAIL, DEVICE_DETAIL
     }
 
     private SlidingUpPanelLayout mLayout;
     private static String TAG = "BayTek";
     private boolean  _doubleBackToExitPressedOnce    = false;
+    private DeviceDetailFragment deviceDetailFragment;
+    private UserDetailFragment userDetailFragment;
+
+    static Context context;
+
+    int currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bay_tek);
+
+        BayTekActivity.context = getApplicationContext();
 
         // Initialize the ViewPager and set an adapter
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
@@ -37,6 +46,35 @@ public class BayTekActivity extends ActionBarActivity implements OnFragmentInter
         // Bind the tabs to the ViewPager
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+
+            @Override
+            public void onPageSelected(int arg0)
+            {
+                currentFragment = arg0;
+                if(arg0 == 0) {
+                    Toast.makeText(BayTekActivity.this, "UsersList", Toast.LENGTH_SHORT).show();
+                } else if (arg0 == 1) {
+                    Toast.makeText(BayTekActivity.this, "DevicesList", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2)
+            {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0)
+            {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -54,6 +92,10 @@ public class BayTekActivity extends ActionBarActivity implements OnFragmentInter
             @Override
             public void onPanelCollapsed(View panel) {
                 Log.i(TAG, "onPanelCollapsed");
+
+                if(currentFragment == 1) {
+                    deviceDetailFragment.getMyMachine().disconnect();
+                }
 
             }
 
@@ -97,10 +139,31 @@ public class BayTekActivity extends ActionBarActivity implements OnFragmentInter
         if (fragmentType == FragmentType.USERS) {
             UserModel user = (UserModel) model;
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+            // Create an instance of editorFrag
+            userDetailFragment = UserDetailFragment.newInstance(user, this);
+
+            // add fragment to the fragment container layout
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, userDetailFragment).addToBackStack("userDetail").commit();
         } else if (fragmentType == FragmentType.DEVICES) {
-            DeviceModel user = (DeviceModel) model;
+            DeviceModel device = (DeviceModel) model;
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+            // Create an instance of editorFrag
+            deviceDetailFragment = DeviceDetailFragment.newInstance(device, this);
+
+
+            // add fragment to the fragment container layout
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, deviceDetailFragment).addToBackStack("deviceDetail").commit();
         }
+    }
+
+    @Override
+    public void onDeviceCharge(DeviceModel device) {
+//        Toast.makeText(this,
+//                "Charge is clicked for " + device.getDeviceName(), Toast.LENGTH_SHORT).show();
+        deviceDetailFragment.getMyMachine().addCredits( (byte) 4);
+
     }
 
     @Override
@@ -121,4 +184,55 @@ public class BayTekActivity extends ActionBarActivity implements OnFragmentInter
             }
         }, 2000);
     }
+
+    @Override
+    public void onConnection() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BayTekActivity.this,
+                        "Connected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onConnectionFailed() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BayTekActivity.this,
+                        "Connection failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDisconnection() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BayTekActivity.this,
+                        "Disconnected", Toast.LENGTH_SHORT).show();
+                //mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+    }
+
+    @Override
+    public void onDataUpdated(final String name,final  byte value) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BayTekActivity.this,
+                        "Data updated for " + name + " val:" + value, Toast.LENGTH_LONG).show();
+
+//                if(name.equalsIgnoreCase("noOfCredits") == Boolean.TRUE) {
+//                    deviceDetailFragment.getMyMachine().disconnect();
+//                }
+            }
+        });
+    }
+
 }
+

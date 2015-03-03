@@ -8,13 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-
-import com.dquid.baytektestapp.R;
-
-import com.dquid.baytektestapp.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -25,7 +20,7 @@ import com.dquid.baytektestapp.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class DeviceFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class DeviceListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,8 +43,8 @@ public class DeviceFragment extends Fragment implements AbsListView.OnItemClickL
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static DeviceFragment newInstance(int position) {
-        DeviceFragment fragment = new DeviceFragment();
+    public static DeviceListFragment newInstance(int position) {
+        DeviceListFragment fragment = new DeviceListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
@@ -60,7 +55,7 @@ public class DeviceFragment extends Fragment implements AbsListView.OnItemClickL
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public DeviceFragment() {
+    public DeviceListFragment() {
     }
 
     @Override
@@ -72,7 +67,8 @@ public class DeviceFragment extends Fragment implements AbsListView.OnItemClickL
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new DeviceAdapter(this.getActivity(), new DeviceModel[] {
+        mAdapter = new DeviceListAdapter(this.getActivity(), new DeviceModel[] {
+                new DeviceModel("0000000000000092", "Emulator", "http://assets1.ignimgs.com/2014/01/31/flappy-bird-buttonjpg-e984c2.jpg"),
                 new DeviceModel("0000000000000115", "Flappy Bird", "http://assets1.ignimgs.com/2014/01/31/flappy-bird-buttonjpg-e984c2.jpg"),
                 new DeviceModel("0000000000000116", "Piano", "http://fc03.deviantart.net/fs48/f/2009/168/0/a/Piano_icon_by_CheeseEnthusiast.png")
         });

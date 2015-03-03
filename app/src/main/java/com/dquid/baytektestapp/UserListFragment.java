@@ -9,13 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.dquid.baytektestapp.R;
-
-import com.dquid.baytektestapp.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -26,7 +22,7 @@ import com.dquid.baytektestapp.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class UserFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class UserListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,11 +42,11 @@ public class UserFragment extends Fragment implements AbsListView.OnItemClickLis
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private UserAdapter mAdapter;
+    private UserListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static UserFragment newInstance(int position) {
-        UserFragment fragment = new UserFragment();
+    public static UserListFragment newInstance(int position) {
+        UserListFragment fragment = new UserListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
@@ -61,7 +57,7 @@ public class UserFragment extends Fragment implements AbsListView.OnItemClickLis
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public UserFragment() {
+    public UserListFragment() {
     }
 
     @Override
@@ -73,16 +69,10 @@ public class UserFragment extends Fragment implements AbsListView.OnItemClickLis
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new UserAdapter(this.getActivity(), new UserModel[] {
-                new UserModel("user 1", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 2", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 3", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 4", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 5", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 6", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 7", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 8", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png"),
-                new UserModel("user 9", "https://jamfnation.jamfsoftware.com/img/default-avatars/generic-user.png")
+        mAdapter = new UserListAdapter(this.getActivity(), new UserModel[] {
+                new UserModel("Ritesh", "https://avatars3.githubusercontent.com/u/4753761?v=3&s=460"),
+                new UserModel("Jyoti", "https://avatars2.githubusercontent.com/u/7777424?v=3&s=460"),
+                new UserModel("Shobhit", "https://avatars1.githubusercontent.com/u/440151?v=3&s=460")
         });
 
     }

@@ -14,4 +14,5 @@ package com.dquid.baytektestapp;
 public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
     public void onFragmentInteraction(BayTekActivity.FragmentType fragmentType, Object model);
+    public void onDeviceCharge(DeviceModel device);
 }

@@ -224,7 +224,7 @@ public class MainActivity extends ActionBarActivity implements DQBaytekMachine.D
             @Override
             public void onClick(View v) {
                 // Init the DQBaytekMachine object
-                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_FLAPPY_BIRD, MainActivity.this);
+                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_FLAPPY_BIRD, "asdasd", MainActivity.this);
 
                 // Disable radio buttons and enable connect toggle
                 pianoRadio.setChecked(false);
@@ -240,7 +240,7 @@ public class MainActivity extends ActionBarActivity implements DQBaytekMachine.D
             @Override
             public void onClick(View v) {
                 // Init the DQBaytekMachine object
-                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_PIANO_TILES, MainActivity.this);
+                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_PIANO_TILES, "sdfsdfsd", MainActivity.this);
 
                 // Disable radio buttons and enable connect toggle
                 flappyRadio.setChecked(false);
@@ -256,7 +256,7 @@ public class MainActivity extends ActionBarActivity implements DQBaytekMachine.D
             @Override
             public void onClick(View v) {
                 // Init the DQBaytekMachine object
-                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_PRIZE_HUB, MainActivity.this);
+                myMachine = new DQBaytekMachine(BTMachineType.BAYTEK_MACHINE_TYPE_PRIZE_HUB, "dfdsfs", MainActivity.this);
 
                 // Disable radio buttons and enable connect toggle
                 flappyRadio.setChecked(false);

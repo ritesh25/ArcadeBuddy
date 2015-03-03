@@ -30,9 +30,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = null;
         if(position == 0) {
-            fragment = UserFragment.newInstance(position);
+            fragment = UserListFragment.newInstance(position);
         } else if(position == 1) {
-            fragment = DeviceFragment.newInstance(position);
+            fragment = DeviceListFragment.newInstance(position);
         }
         return fragment;
     }
